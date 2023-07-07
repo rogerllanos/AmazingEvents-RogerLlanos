@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+h2 {
+    font-size: xxx-large;
+    color: #dae8f5;
+}
 #icon {
     width: 6rem;
     margin: 1rem;
@@ -28,4 +32,10 @@
 }
 table {
     border: solid 2px black;
+}
+footer{
+    min-height: 15vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #dae8f5;
 }
