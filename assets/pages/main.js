@@ -82,7 +82,6 @@ inputSearch.addEventListener("input",(e)=>{
     allCards.innerHTML=""
     showCard(cardFilter, allCards)
 
-    console.log(inputValue);
 })
 
 
@@ -99,8 +98,6 @@ inputSearch.addEventListener("input",(e)=>{
          return valuFilter;
        
     })   
-    console.log(filterName);
-    console.log(categories);
     return filter;
    
 }
