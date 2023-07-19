@@ -4,9 +4,10 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
 .then(date => {
     cardsDate = date.events
     console.log(cardsDate);
-    eventshighets =cardsDate.find(card)
+    // eventshighets =cardsDate.find(card)
 })
-.catch(error)
+.c
+
 
 
 
@@ -24,7 +25,8 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
    console.log(pastData);
 
     let categoriaPasado = pastData.map(evento => evento.category)
-        let arrayPast = Array.from(new Set(categoriaPasado))
+    console.log(categoriaPasado);
+            let arrayPast = Array.from(new Set(categoriaPasado))
         console.log(arrayPast);
 
 
@@ -41,15 +43,16 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
                 })
                 revenues = revenues 
                 asistenciaPromedio = asistenciaPromedio / eventosPorCategoriaPasado.length
+                console.log(asistenciaPromedio);
                 
-                console.log(categoriaPasado, asistenciaPromedio, revenues, tablapastEvents);
+                console.log(2, asistenciaPromedio, revenues, tablapastEvents);
                
             crearFila(categoriaPasado, asistenciaPromedio, revenues, tablapastEvents)
 
         });
 
     })
-    .catch(error)
+
 
 
 
@@ -64,6 +67,7 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
     futureData= cardsDate.filter(cardFuture => cardFuture.date> current)
     console.log(futureData);
     let categoriaFuturo = futureData.map(evento => evento.category)
+    console.log(categoriaFuturo);
         let arrayUpcom = Array.from(new Set(categoriaFuturo))
         console.log(arrayUpcom);
 
@@ -86,7 +90,6 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
         });
 
     }) 
-    .catch(error=> console.log(error))
   
    
 
