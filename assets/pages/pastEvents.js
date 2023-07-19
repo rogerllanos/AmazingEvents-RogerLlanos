@@ -1,72 +1,53 @@
+
 let allCards = document.getElementById("containerCard")
+let pastData ;
 
-function createCard(cards){
-    return `<div class="card m-3" style="width: 15rem;" id=1>
-    <img class="card-img-top" src="${cards.image}  alt="...">
-    <div class="card-body">
-        <h5 class="card-title">${cards.name}</h5>
-        <p class="card-text" style="height: 6.5rem;">${cards.description}</p>
-        <div class="d-flex justify-content-between align-items-center ">
-            <span> ${cards.price}$ </span>
-            <a href="./details.html?paramenter=${cards._id}" class="btn btn-primary" > Details</a>
-        </div>    
-    </div>`
-}
 
-function filter (events,current){ //array , string 
-    let newData= []
-    for (let event of events) {
-       if (current > event.date) {
-          newData.push(event)
-       } 
-    }
-    return newData
-}
-let newData = filter(data.events,data.currentDate)
+fetch("https://mindhub-xj03.onrender.com/api/amazing ")
+.then(answer => answer.json())
+.then( date => {
+     cardsDate = date.events 
+    currentDate =date.currentDate
+    console.log(currentDate);
+    pastData= cardsDate.filter(cardPast => cardPast.date < currentDate)
 
-function showCard(newData,container){
-    for( let cards of newData){
-        container.innerHTML += createCard(cards)
-    }
-}
-showCard(newData, allCards)
+    showCard(pastData, allCards)
+    printBoxes(pastData,checkBoxes)
+
+})
+.catch(error=> console.log(error))
+
+
+
 
 let checkBoxes = document.getElementById("containerCheckBox")
 
-function createBox(box){
-    return `<div class="form-check">
-    <input class="form-check-input" type="checkbox" value="${box}" id="${box}">
-    <label class="form-check-label" for="${box}">${box}</label>    
-</div>`
-} 
 
-let showBoxes =newData.map(box => box.category)
-let boxesNotRepeat = new Set(showBoxes)
 
-let finalBoxes = Array.from(boxesNotRepeat)
-console.log(finalBoxes);
-
-function printBoxes (array,container){
-    for(let box of array){
-        container.innerHTML+=createBox(box)
+function printBoxes(data ,container){
+    let showBoxes =data.map(box => box.category)
+    let boxesNotRepeat = new Set(showBoxes)
+    
+    let finalBoxes = Array.from(boxesNotRepeat)
+        for(let box of finalBoxes){
+            container.innerHTML+=createBox(box)
+        }
+    
     }
-}
-printBoxes(finalBoxes,checkBoxes)
 
-const arrayCheck = []
+let arrayCheck = []
 let inputValue=""
 
 let checkBox = document.querySelectorAll("input[type='checkbox']")
 
 checkBoxes.addEventListener("change",(e)=>{
-    filterCard(newData,e.target.value)
     if ( e.target.checked){
          arrayCheck.push(e.target.id)
     }else if (!(e.target.checked)){
-        arrayCheck.pop(e.target.id)
+        arrayCheck = arrayCheck.filter(idcheck=> idcheck != e.target.id)
     }
     allCards.innerHTML=""
-    let checkFilter = crossedFilter(inputValue, arrayCheck)
+    let checkFilter = crossedFilter(pastData,inputValue, arrayCheck)
     showCard(checkFilter,allCards)
 })  
 function filterCard(array,box){
@@ -77,35 +58,14 @@ function filterCard(array,box){
 // -------------
 
 let inputSearch = document.getElementById("search")
-let showName = newData.map(name =>name.name )
-let nameMed = new Set(showName)
-let finalName = Array.from(nameMed)
-
 
 
 inputSearch.addEventListener("input",(e)=>{
     inputValue = e.target.value
-    inputValue.toLowerCase()
-    let cardFilter = crossedFilter(inputValue, arrayCheck);
+    let cardFilter = crossedFilter(pastData,inputValue, arrayCheck);
     allCards.innerHTML=""
     showCard(cardFilter, allCards)
 
 })
 
 
- function crossedFilter (filterName,categories){
-     let filter = newData.filter(card => {
-         let valuFilter = true; 
-         if (filterName !== ""){
-           valuFilter = card.name.toLowerCase().includes(filterName.toLowerCase())
-         }
-         if(categories.length != 0 && valuFilter){
-             valuFilter = categories.includes(card.category)
-         }
-       
-         return valuFilter;
-       
-    })   
-    return filter;
-   
-}

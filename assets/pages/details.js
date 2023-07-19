@@ -2,11 +2,23 @@ let paramenter= location.search
 let params = new URLSearchParams(paramenter)
 let id = params.get('paramenter')
 console.log(id);
-
-let detailCard = data.events.find(card => card._id === id)
-console.log(detailCard);
-
 let containerDetail = document.getElementById("sectionCard")
+
+fetch("https://mindhub-xj03.onrender.com/api/amazing ")
+.then(resolve => resolve.json())
+.then( date => {
+     cardsDate = date.events 
+     console.log(cardsDate);
+     
+    
+     let detailCard = cardsDate.find(card => card._id == id)
+    
+     createCardDetail(containerDetail,detailCard)
+    
+     
+})
+.catch(error=> console.log(error))
+
 
 function createCardDetail (element,objet) {
     return element.innerHTML+= 
@@ -21,4 +33,3 @@ function createCardDetail (element,objet) {
     </section>
 </div> `
 }
-createCardDetail(containerDetail,detailCard)

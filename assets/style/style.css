@@ -7,6 +7,10 @@ h2 {
     font-size: xxx-large;
     color: #dae8f5;
 }
+h5 {
+    height: 2.3rem;
+    text-align: center;
+}
 #icon {
     width: 6rem;
     margin: 1rem;
